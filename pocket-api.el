@@ -161,7 +161,7 @@
                      )))
 
 ;;;###autoload
-(cl-defun pocket-api-get (&key (offset 1) (count 10))
+(cl-defun pocket-api-get (&key (offset 0) (count 10))
   "Gets things from your pocket."
   (unless (pocket-api-access-granted-p)
     (pocket-api-authorize))
