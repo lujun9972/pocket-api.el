@@ -67,11 +67,12 @@
   "Default extra headers")
 
 ;;no use hiding this I suppose
-(defcustom pocket-api-consumer-key "30410-da1b34ce81aec5843a2214f4"
+(defcustom pocket-api-consumer-key "76296-c372f58ae77b82e2e157352d"
   "API consumer key"
   :group 'pocket-api
   :type 'string)
 
+;; (setq pocket-api-consumer-key "76296-c372f58ae77b82e2e157352d")
 ;;access-key and username stored here
 (defcustom pocket-api-auth-file (expand-file-name "~/.pocket-api-auth.json")
   "JSON file to store the authorization."
@@ -147,10 +148,10 @@
   "Request a request token, then direct the user to authorization URL"
   (pocket-api--post pocket-api-oauth-request-url
                    `(("consumer_key" . ,pocket-api-consumer-key)
-                     ("redirect_uri" . "http://www.google.com" ))
+                     ("redirect_uri" . (url-encode-url "http://www.baidu.com") ))
                    (lambda (data)
                      (let* ((token (cdr (assoc 'code data)))
-                            (url (concat "https://getpocket.com/auth/authorize?request_token=" token)))
+                            (url (format "https://getpocket.com/auth/authorize?request_token=%s&redirect_uri=%s" token (url-hexify-string "http://www.baidu.com"))))
                        (setq pocket-api-request-token token)
                        (kill-new url)
                        (display-message-or-buffer
